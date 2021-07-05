@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './randomChar.css';
+import './randomChar.scss';
 
 export default class RandomChar extends Component {
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './itemList.css';
+import './itemList.scss';
 export default class ItemList extends Component {
 
     render() {
