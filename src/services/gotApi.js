@@ -12,22 +12,56 @@ export default class GotApi {
         }
         return await res.json();
     }
-    getAllCharacters = ()=>{
-        return this.getResource(`/characters/?page=5&Size=10`)
+    getAllCharacters = async ()=>{
+        const res = await this.getResource(`/characters/?page=5&Size=10`);
+        return res.map(this._transformCharacter)
     }
-    getCharacter = (id)=>{
-        return this.getResource(`/characters/${id}`)
+    getCharacter = async (id)=>{
+        const res = await this.getResource(`/characters/${id}`)
+        return this._transformCharacter(res);
     }
-    getBooks = ()=>{
-        return this.getResource(`/books/`)
+    getBooks = async ()=>{
+        const res = this.getResource(`/books/`)
+        return res.map(this._transformBooks)
     }
-    getBook = (id)=>{
-        return this.getResource(`/books/${id}`)
+    getBook = async (id)=>{
+        const res = await this.getResource(`/books/${id}`)
+        return this._transformBooks(res)
     }
-    getHouses = ()=>{
-        return this.getResource(`/houses/`)
+    getHouses = async ()=>{
+        const res = await this.getResource(`/houses/`)
+        return res.map(this._transformHouses)
     }
-    getHouse = (id)=>{
-        return this.getResource(`/houses/${id}`)
+    getHouse = async (id)=>{
+        const res = await this.getResource(`/houses/${id}`)
+        return this._transformHouses(res)
+    }
+    _transformCharacter = (data)=>{
+        return{
+            name: data.name,
+            gender: data.gender,
+            born: data.born,
+            died: data.died,
+            culture: data.culture
+        }
+    }
+    _transformBooks = (data)=>{
+        return{
+            name: data.name,
+            numberOfPages: data.numberOfPages,
+            publiser: data.publiser,
+            released: data.released,
+            culture: data.culture
+        }
+    }
+    _transformHouses = (data)=>{
+        return{
+            name: data.name,
+            region: data.region,
+            words: data.words,
+            titles: data.titles,
+            overlord: data.overlord,
+            ansetralWeapons: data.ansetralWeapons
+        }
     }
 }
