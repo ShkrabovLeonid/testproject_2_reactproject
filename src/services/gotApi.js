@@ -36,8 +36,13 @@ export default class GotApi {
         const res = await this.getResource(`/houses/${id}`)
         return this._transformHouses(res)
     }
+
+    _regularID = (data)=>{
+        return +data.match(/\d{1,}/)[0];
+    }
+
     _transformCharacter = (data)=>{
-        const id = +data.url.match(/\d{1,}/)[0];
+        const id = this._regularID(data.url);
         return{
             id: id,
             name: data.name,
