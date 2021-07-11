@@ -1,34 +1,51 @@
-import React from 'react';
-import {Col, Row, Container} from 'reactstrap';
+import React, {Component} from 'react';
+import {Col, Row, Container, Button} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import CharacterPage from '../characterPage'
+import ErrorMessage from '../errorMessage';
 
 
-const App = () => {
-    return (
-        <> 
-            <Container>
-                <Header />
-            </Container>
-            <Container>
-                <Row>
-                    <Col lg={{size: 5, offset: 0}}>
-                        <RandomChar/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md='6'>
-                        <ItemList />
-                    </Col>
-                    <Col md='6'>
-                        <CharDetails />
-                    </Col>
-                </Row>
-            </Container>
-        </>
-    );
+export default class App extends Component {
+    state = {
+        randomCharToggle: true,
+        error: false,
+    }
+
+    toggle = ()=>{
+        this.setState((state, props)=>{
+            const randomCharToggle = state.randomCharToggle;
+            return {
+                randomCharToggle: !randomCharToggle
+            }
+        })
+    }
+
+    render() {
+        if (this.state.error) {
+            return <ErrorMessage/>;
+        }
+        const char = this.state.randomCharToggle ? <RandomChar/> : null;
+
+        return (
+            <> 
+                <Container>
+                    <Header />
+                </Container>
+                <Container>
+                    <Row>
+                        <Col lg={{size: 5, offset: 0}}>
+                            {char}
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className='mb-4'>
+                            <Button onClick={this.toggle} className='btn-info'>Скрыть/Показать</Button>
+                        </Col>
+                    </Row>
+                    <CharacterPage/>
+                </Container>
+            </>
+        );
+    }
 };
-
-export default App;

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import GotApi from '../../services/gotApi';
 import Spinner from '../spinner';
-import ErrorMassage from '../errorMassage';
+import ErrorMassage from '../errorMessage';
 
 import './randomChar.scss';
 
@@ -9,19 +9,29 @@ export default class RandomChar extends Component {
 
     constructor() {
         super();
-        this.updateChar();
+        this.timerID = null;
     }
-
-    GotApi = new GotApi();
 
     state = {
         data: {},
-        loading: true
+        loading: true,
+        error: false
+    }
+
+    getGotApi = new GotApi();
+
+    componentDidMount = ()=>{
+        this.updateChar();
+        this.timerID = setInterval(this.updateChar, 1500);
+    }
+
+    componentWillUnmount = ()=>{
+        clearInterval(this.timerID);
     }
 
     onCharLoaded = (data) => {
         this.setState({
-            data,
+            data: data,
             loading:false,
             error:false
         })
@@ -34,16 +44,21 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateChar(){
-        const id = Math.floor(Math.random()*140000 + 25);
-        this.GotApi.getCharacter(id)
+    updateChar = ()=>{
+        const id = Math.floor(Math.random()*140 + 25);
+        this.getGotApi.getCharacter(id)
         .then((data)=>{
+            data.id = id;
             this.onCharLoaded(data);
         })
         .catch(this.onError)
     }
 
     render() {
+        if (this.state.error) {
+            return <ErrorMassage/>;
+        }
+
         const {data, loading, error } = this.state;
 
         const errorMassage = error ? <ErrorMassage/> : null;
@@ -61,10 +76,10 @@ export default class RandomChar extends Component {
 }
 
 const View = ({data})=>{
-    const {name, gender, born, died, culture} = data;
+    const {id, name, gender, born, died, culture} = data;
     return(
         <>
-        <h4>Random Character: {name}</h4>
+        <h4>Random Character: {name}, {id}</h4>
         <ul className="list-group list-group-flush">
             <li className="list-group-item d-flex justify-content-between">
                 <span className="term">Gender </span>

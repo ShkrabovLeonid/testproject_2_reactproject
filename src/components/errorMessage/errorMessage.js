@@ -1,8 +1,8 @@
 import React from 'react';
-import './errorMassage.scss'
+import './errorMessage.scss';
 import img from './got.jpeg';
 
-const ErrorMassage = ()=>{
+const ErrorMessage = ()=>{
     return(
         <>
         {/* <img src={process.env.PUBLIC_URL + '/img/got.jpeg'} alt=""></img> */}
@@ -12,4 +12,4 @@ const ErrorMassage = ()=>{
     )
 }
 
-export default ErrorMassage;
+export default ErrorMessage;

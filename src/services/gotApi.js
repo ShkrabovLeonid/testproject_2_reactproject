@@ -37,7 +37,9 @@ export default class GotApi {
         return this._transformHouses(res)
     }
     _transformCharacter = (data)=>{
+        const id = +data.url.match(/\d{1,}/)[0];
         return{
+            id: id,
             name: data.name,
             gender: data.gender,
             born: data.born,
