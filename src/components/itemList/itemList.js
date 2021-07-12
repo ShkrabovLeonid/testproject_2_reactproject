@@ -1,42 +1,42 @@
 import React, {Component} from 'react';
-import GotApi from '../../services/gotApi';
 import Spinner from '../spinner';
 import './itemList.scss';
 export default class ItemList extends Component {
 
-    getGotApi = new GotApi();
-
     state = {
-        charList: null
+        itemList: null
     }
 
     componentDidMount = ()=>{
-        this.getGotApi.getAllCharacters()
-        .then((charList)=>{
-            this.setState({charList})
+        const {getData} = this.props;
+        getData()
+        .then((itemList)=>{
+            this.setState({itemList})
         })
     };
 
-    renderCharList = ()=>{
-        return this.state.charList.map((item)=>{
+    renderitemList = ()=>{
+        return this.state.itemList.map((item)=>{
+            const {id} = item;
+            const label = this.props.renderItem(item);
             return (
                 <li 
-                key={item.id}
+                key={id}
                 className="list-group-item"
-                onClick={()=>this.props.onCharSelected(item.id)}
+                onClick={()=>this.props.onItemSelected(id)}
                 >
-                {item.name}
+                {label}
                 </li>
             )
         })
     }
 
     render() {
-        const {charList} = this.state;
-        if (!charList) {
+        const {itemList} = this.state;
+        if (!itemList) {
             return <Spinner/>
         }
-        const items = this.renderCharList(charList);
+        const items = this.renderitemList(itemList);
         return (
             <ul className="item-list list-group">
                 {items}

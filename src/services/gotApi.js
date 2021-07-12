@@ -12,7 +12,7 @@ export default class GotApi {
         }
         return await res.json();
     }
-    getAllCharacters = async ()=>{
+    getCharacters = async ()=>{
         const res = await this.getResource(`/characters/?page=5&Size=10`);
         return res.map(this._transformCharacter)
     }
@@ -21,7 +21,7 @@ export default class GotApi {
         return this._transformCharacter(res);
     }
     getBooks = async ()=>{
-        const res = this.getResource(`/books/`)
+        const res = await this.getResource(`/books/`)
         return res.map(this._transformBooks)
     }
     getBook = async (id)=>{
@@ -53,7 +53,9 @@ export default class GotApi {
         }
     }
     _transformBooks = (data)=>{
+        const id = this._regularID(data.url);
         return{
+            id: id,
             name: data.name,
             numberOfPages: data.numberOfPages,
             publiser: data.publiser,
@@ -62,7 +64,9 @@ export default class GotApi {
         }
     }
     _transformHouses = (data)=>{
+        const id = this._regularID(data.url);
         return{
+            id: id,
             name: data.name,
             region: data.region,
             words: data.words,
