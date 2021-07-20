@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import GotApi from '../../services/gotApi';
 import Spinner from '../spinner';
 import ErrorMassage from '../errorMessage';
+import PropsTypes from 'prop-types';
 
 import './randomChar.scss';
 
@@ -18,11 +19,28 @@ export default class RandomChar extends Component {
         error: false
     }
 
+    static defaultProps = {
+        interval: 3000
+    }
+
+    static propTypes = {
+        // interval: (props, propName, componentName)=>{
+        //     const value = props[propName];
+        //     if (typeof value === 'number' && !isNaN(value)) {
+        //         return null
+        //     }
+        //     return new TypeError('Error' + componentName);
+        // }
+        interval: PropsTypes.oneOfType([
+            PropsTypes.number
+        ])
+    }
+
     getGotApi = new GotApi();
 
     componentDidMount = ()=>{
         this.updateChar();
-        this.timerID = setInterval(this.updateChar, 1500);
+        this.timerID = setInterval(this.updateChar, this.props.interval);
     }
 
     componentWillUnmount = ()=>{

@@ -25,7 +25,7 @@ export default class Home extends Component{
         if (this.state.error) {
             return <ErrorMessage/>;
         }
-        const char = this.state.randomCharToggle ? <RandomChar/> : null;
+        const char = this.state.randomCharToggle ? <RandomChar interval={5000}/> : null;
 
         return (
             <>
