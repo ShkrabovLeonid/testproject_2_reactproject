@@ -30,7 +30,7 @@ class BooksPage extends Component{
             <ItemList
             getData={this.getGotApi.getBooks}
             onItemSelected={(itemID)=>{
-                this.props.history.push(`/books/${itemID}`)
+                this.props.history.push(`${process.env.REACT_APP_PATH}books/${itemID}`)
             }}
             renderItem={(item)=> `(${item.id}) ${item.name}` }
             />
