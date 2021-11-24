@@ -31,19 +31,19 @@ const Header = () => {
     return (
         <HeaderBlock>
             <HeaderTitle>
-                <Link to='/'>
+                <Link to={process.env.REACT_APP_PATH}>
                 Game of Thrones DB
                 </Link>
             </HeaderTitle>
             <HeaderLinks>
                 <li>
-                    <Link to='/characters'>Characters</Link>
+                    <Link to={process.env.REACT_APP_PATH + 'characters'}>Characters</Link>
                 </li>
                 <li>
-                    <Link to='/houses'>Houses</Link>
+                    <Link to={process.env.REACT_APP_PATH + 'houses'}>Houses</Link>
                 </li>
                 <li>
-                    <Link to='/books/'>Books</Link>  
+                    <Link to={process.env.REACT_APP_PATH + 'books'}>Books</Link>
                 </li>
             </HeaderLinks>
         </HeaderBlock>

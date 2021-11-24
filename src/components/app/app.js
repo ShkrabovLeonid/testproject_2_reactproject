@@ -28,11 +28,11 @@ export default class App extends Component {
                         <Header/>
                     </Container>
                     <Container>
-                        <Route path='/' exact component={Home}/>
-                        <Route path='/characters' component={CharacterPage}/>
-                        <Route path='/houses' component={HousesPage}/>
-                        <Route path='/books' exact component={BooksPage}/>
-                        <Route path='/books/:id' render={
+                        <Route path={process.env.REACT_APP_PATH}  exact component={Home}/>
+                        <Route path={process.env.REACT_APP_PATH + 'characters'} component={CharacterPage}/>
+                        <Route path={process.env.REACT_APP_PATH + 'houses'} component={HousesPage}/>
+                        <Route path={process.env.REACT_APP_PATH + 'books'} exact component={BooksPage}/>
+                        <Route path={process.env.REACT_APP_PATH + 'books/:id'} render={
                             ({match, location, history})=>{
                                 return <BooksItem bookid={match.params.id}/>
                             }
